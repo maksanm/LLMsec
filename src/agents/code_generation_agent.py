@@ -1,14 +1,14 @@
-from enum import Enum
-
-class SupportedLLMs(Enum):
-    OPENAI_41 = 1
-    DEEPSEEK_V3 = 2
+from chains.code_generation_chain import CodeGenerationChain, SupportedLLMs
 
 
 class CodeGenerationAgent:
 
     def __init__(self, llm: SupportedLLMs):
-        return
+        self.llm = llm
+        self.stacks_identification_chain = CodeGenerationChain().create(llm)
 
     def invoke(self, state):
-        return {}
+        code_blocks = self.stacks_identification_chain.invoke(state)["code_blocks"]
+        return {
+            "llm_codeblocks_pairs": [(self.llm, code_blocks)]
+        }

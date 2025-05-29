@@ -10,12 +10,20 @@ from agents.code_generation_agent import CodeGenerationAgent, SupportedLLMs
 
 class TaskState(TypedDict):
     task_description: str
-    tech_stacks: Annotated[List[str], add]
+    tech_stacks: List[str]
+    is_valid: bool
+    llm_codeblocks_pairs: Annotated[List[tuple[str, dict]], add]
 
 
 class GraphFactory:
 
-    def _route_to_code_generation_agents(self, state: TaskState):
+    def _validation_routing(self, state):
+        if state["is_valid"]:
+            return "stacks_identification_agent"
+        else:
+            return END
+
+    def _code_generation_routing(self, state: TaskState):
         llm_agents_forward_instructions = []
         for tech_stack in state["tech_stacks"]:
             llm_agent_state = {
@@ -35,8 +43,8 @@ class GraphFactory:
         graph.add_node("deepseek_code_generation_agent", CodeGenerationAgent(llm=SupportedLLMs.DEEPSEEK_V3).invoke)
 
         graph.add_edge(START, "validation_agent")
-        graph.add_edge("validation_agent", "stacks_identification_agent")
-        graph.add_conditional_edges("stacks_identification_agent", self._route_to_code_generation_agents)
+        graph.add_conditional_edges("validation_agent", self._validation_routing)
+        graph.add_conditional_edges("stacks_identification_agent", self._code_generation_routing)
         graph.add_edge("openai_code_generation_agent", END)
         graph.add_edge("deepseek_code_generation_agent", END)
 
