@@ -1,11 +1,12 @@
 
 from chains.stacks_identification_chain import StacksIdentificationChain
+from utils import SupportedLLMs
 
 
 class StacksIdentificationAgent:
 
-    def __init__(self):
-        self.stacks_identification_chain = StacksIdentificationChain().create()
+    def __init__(self, llm: SupportedLLMs):
+        self.stacks_identification_chain = StacksIdentificationChain().create(llm)
 
     def invoke(self, state):
         return {
