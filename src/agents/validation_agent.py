@@ -1,6 +1,6 @@
 
 from chains.validation_chain import ValidationChain
-from utils import SupportedLLMs
+from llm_provider import SupportedLLMs
 
 
 class ValidationAgent:

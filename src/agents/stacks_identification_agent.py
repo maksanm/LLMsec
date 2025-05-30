@@ -1,6 +1,6 @@
 
 from chains.stacks_identification_chain import StacksIdentificationChain
-from utils import SupportedLLMs
+from llm_provider import SupportedLLMs
 
 
 class StacksIdentificationAgent:

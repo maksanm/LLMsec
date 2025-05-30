@@ -17,7 +17,7 @@ class TaskState(TypedDict):
 
 class GraphFactory:
 
-    llm_agents = ["openai_code_agent", "deepseek_code_agent", "grok_code_agent"]
+    llm_agents = []
 
     def _validation_routing(self, state):
         if state["is_valid"]:
@@ -41,15 +41,14 @@ class GraphFactory:
 
         graph.add_node("validation_agent", ValidationAgent(llm=SupportedLLMs.OPENAI).invoke)
         graph.add_node("stacks_identification_agent", StacksIdentificationAgent(llm=SupportedLLMs.OPENAI).invoke)
-        graph.add_node("openai_code_agent", CodeGenerationAgent(llm=SupportedLLMs.OPENAI).invoke)
-        graph.add_node("deepseek_code_agent", CodeGenerationAgent(llm=SupportedLLMs.DEEPSEEK).invoke)
-        graph.add_node("grok_code_agent", CodeGenerationAgent(llm=SupportedLLMs.GROK).invoke)
+        for llm in SupportedLLMs:
+            graph.add_node(f"{llm}_code_agent", CodeGenerationAgent(llm).invoke)
+            self.llm_agents.append(f"{llm}_code_agent")
 
         graph.add_edge(START, "validation_agent")
         graph.add_conditional_edges("validation_agent", self._validation_routing)
         graph.add_conditional_edges("stacks_identification_agent", self._code_generation_routing)
-        graph.add_edge("openai_code_agent", END)
-        graph.add_edge("deepseek_code_agent", END)
-        graph.add_edge("grok_code_agent", END)
+        for llm_agent in self.llm_agents:
+            graph.add_edge(llm_agent, END)
 
         return graph.compile()

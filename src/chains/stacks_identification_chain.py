@@ -3,7 +3,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
-from utils import SupportedLLMs, get_llm
+from llm_provider import SupportedLLMs, get_llm
 
 
 class StacksIdentificationChain:
