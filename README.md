@@ -1,10 +1,10 @@
 # LLMsec
 
-**LLMsec** evaluates and compares the code generation safety of leading Large Language Models (LLMs) such as OpenAI GPT-4.1, DeepSeek V3, and others. The project generates code solutions for programming tasks using these models and analyzes them for security vulnerabilities with [Trivy](https://github.com/aquasecurity/trivy). Detected vulnerabilities are classified using CVSS-based severity ratings to benchmark LLMs by the number and criticality of threats in their generated code.
+**LLMsec** evaluates and compares the code generation safety of leading Large Language Models (LLMs) such as OpenAI GPT-4.1, DeepSeek V3, Grock-3 and others. The project generates code solutions for programming tasks using these models and analyzes them for security vulnerabilities with [Trivy](https://github.com/aquasecurity/trivy). Detected vulnerabilities are classified using CVSS-based severity ratings to benchmark LLMs by the number and criticality of threats in their generated code.
 
 ## Project Overview
 
-- **Model Coverage:** Supports testing with OpenAI GPT-4.1, DeepSeek V3, TBC.
+- **Model Coverage:** Supports testing with OpenAI GPT-4.1, DeepSeek V3, Grok-3, TBC.
 - **Security Assessment:** Uses Trivy to scan generated code for vulnerabilities, classifying them by CVSS severity: Unknown, Low, Medium, High, Critical.
 - **Experiment Scope:** Runs on a set of programming problems (e.g., CRUD, web apps, auth flows) described in natural language and implemented in various tech stacks. Analyzes and compares models based on the number and severity of vulnerabilities, and identifies patterns such as supply chain attack risks.
 
@@ -35,3 +35,7 @@ poetry run python src/server.py
 ```
 
 The interactive API docs will be available at [http://localhost:8000](http://localhost:8000) (Swagger UI).
+
+### Endpoint Parameters
+
+Use the `generation_mode` parameter in endpoint requests to specify whether the system should analyze the code implementing the desired functionality, or just the dependencies needed for the project.
