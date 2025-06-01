@@ -4,7 +4,6 @@ from langchain_core.output_parsers import JsonOutputParser
 from llm_provider import SupportedLLMs, get_llm
 
 
-
 class CodeGenerationChain:
     CODE_GENERATION_PROMPT_TEMPLATE = """Given the following software development task:
 {task_description}
