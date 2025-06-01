@@ -25,6 +25,8 @@
 
 3. **Set up environment variables:**
    - Copy `.env.sample` to `.env` and fill in the required values.
+   - Set the `TRIVY_PATH` variable to the full path to your Trivy executable.
+   - Provide required LLM platforms API keys.
 
 ### Running the Server
 
