@@ -27,8 +27,8 @@ async def redirect_root_to_docs():
 
 
 @app.post("/ask")
-async def ask(task_description: str):
-    return graph.invoke({"task_description": task_description})
+async def ask(task_description: str, generation_mode: str = "dependencies"):
+    return graph.invoke({"task_description": task_description, "generation_mode": generation_mode})
 
 
 if __name__ == "__main__":

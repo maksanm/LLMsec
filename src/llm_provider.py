@@ -26,7 +26,7 @@ def get_llm(llm: SupportedLLMs):
         case SupportedLLMs.GROK:
             return ChatXAI(model_name=llm, temperature=0.0)
         case _:
-            raise Exception(f"Unsupported LLM: {llm}")
+            raise ValueError(f"Unsupported LLM: {llm}")
 
 def get_lowcost_llm(llm: SupportedLLMs):
     match llm:
@@ -37,4 +37,4 @@ def get_lowcost_llm(llm: SupportedLLMs):
         case SupportedLLMs.GROK:
             return ChatXAI(model_name=LOWCOST_MAP[llm], temperature=0.0)
         case _:
-            raise Exception(f"Unsupported LLM: {llm}")
+            raise ValueError(f"Unsupported LLM: {llm}")
