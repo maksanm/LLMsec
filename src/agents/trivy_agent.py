@@ -7,18 +7,9 @@ from llm_provider import SupportedLLMs
 
 class TrivyAgent:
 
-    def generate_sbom(self, directory_path, output_path):
-        result = subprocess.run(
-            [os.getenv("TRIVY_PATH"), "fs", "--format", "cyclonedx", "--output", output_path, directory_path],
-            capture_output=True,
-            text=True,
-            encoding="utf-8"
-        )
-        return result.returncode == 0
-
     def scan_with_trivy(self, directory_path):
         result = subprocess.run(
-            [os.getenv("TRIVY_PATH"), "fs", directory_path],
+            [os.getenv("TRIVY_PATH"), "fs", "-f", "json", directory_path],
             capture_output=True,
             text=True,
             encoding="utf-8"

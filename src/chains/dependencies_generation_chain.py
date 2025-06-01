@@ -15,7 +15,7 @@ For each technology, generate the primary dependency/requirement file (e.g., req
 
 **Instructions:**
 - Create the correct dependency file for each technology as used at a project root.
-- List all required packages/dependencies, EACH WITH AN EXPLICIT VERSION.
+- List all required packages/dependencies, EACH WITH AN EXPLICIT VERSION, including those needed for integrating the technologies within the tech stack.
 - Output only one code block per technology, with the complete content of the file, and proper, legitimate filename.
 - Escape only characters required by JSON formatting (e.g. do NOT escape ', $).
 - Return only valid JSON in this format:

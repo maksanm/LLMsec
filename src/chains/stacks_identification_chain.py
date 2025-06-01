@@ -22,7 +22,7 @@ Return your answer as a JSON object containing an array called "tech_stacks". Fo
 User programming task:
 {task_description}
 
-Response:
+If the user mentions any specific technology, be sure to include it in one of the stacks!
 """
 
     def create(self, llm: SupportedLLMs):

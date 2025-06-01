@@ -13,7 +13,8 @@ and the following technology stack:
 
 For each technology in the stack, generate as many code blocks as needed to represent the key files required for its role in the task. For each code block:
 
-- Each code block should correspond to a distinct, essential file required for that technology’s role in the solution (e.g., application files, dependecy files, configs, modules, etc.).
+- Each code block should correspond to a distinct, essential file required for that technology’s role in the solution (e.g., application files, configs, modules, etc.).
+- If a dependency or package file is required for the technology (such as `package.json` for Node.js, `.csproj` for C#, or a Maven file for Java), generate it as one of the code blocks with all necessary dependencies.
 - Together, the code blocks for each technology must cover the main logic and structure needed for integration into the overall system.
 - Ensure code blocks are logically consistent and interconnected across technologies where relevant (e.g., shared APIs, data models, configuration).
 - Preserve any necessary project structure and organization within the code itself, but provide only the filename (not a relative or absolute path) in the filename field.
