@@ -24,10 +24,10 @@ class GenerationAgent:
                 case _:
                     raise ValueError(f"Unknown generation_mode: {state['generation_mode']}.")
             return {
-                "llm_codeblocks_pairs": [(self.llm, code_blocks)]
+                "llm_codeblocks_dicts": [{self.llm: code_blocks}]
             }
         except Exception as e:
             print((f"Exception for LLM '{self.llm}': {e}"))
             return {
-                "llm_codeblocks_pairs": [(self.llm, {})]
+                "llm_codeblocks_dicts": [{self.llm: {}}]
             }

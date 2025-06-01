@@ -6,6 +6,7 @@ from operator import add
 from agents.validation_agent import ValidationAgent
 from agents.stacks_identification_agent import StacksIdentificationAgent
 from agents.generation_agent import GenerationAgent, SupportedLLMs
+from agents.trivy_agent import TrivyAgent
 
 
 class TaskState(TypedDict):
@@ -13,7 +14,8 @@ class TaskState(TypedDict):
     generation_mode: str
     tech_stacks: List[str]
     is_valid: bool
-    llm_codeblocks_pairs: Annotated[List[tuple[str, dict]], add]
+    llm_codeblocks_dicts: Annotated[List[dict[str, dict]], add]
+    trivy_results: dict
 
 
 class GraphFactory:
@@ -46,11 +48,14 @@ class GraphFactory:
         for llm in SupportedLLMs:
             graph.add_node(f"{llm}_generation_agent", GenerationAgent(llm).invoke)
             self.llm_agents.append(f"{llm}_generation_agent")
+        graph.add_node("trivy_agent", TrivyAgent().invoke)
 
         graph.add_edge(START, "validation_agent")
         graph.add_conditional_edges("validation_agent", self._validation_routing)
         graph.add_conditional_edges("stacks_identification_agent", self._generation_generation_routing)
         for llm_agent in self.llm_agents:
-            graph.add_edge(llm_agent, END)
+            graph.add_edge(llm_agent, "trivy_agent")
+        graph.add_edge("trivy_agent", END)
+
 
         return graph.compile()
