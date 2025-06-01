@@ -1,7 +1,7 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
-from llm_provider import SupportedLLMs, get_llm
+from llm_provider import SupportedLLMs, get_llm, get_lowcost_llm
 
 
 class CodeGenerationChain:
@@ -11,18 +11,17 @@ class CodeGenerationChain:
 and the following technology stack:
 {tech_stack}
 
-For each technology in the stack, generate a single code block that showcases its primary role in the task. Each block should:
+For each technology in the stack, generate as many code blocks as needed to represent the key files required for its role in the task. For each code block:
 
-- Include necessary framework initialization, configuration, entry point, and main/bootstrap code (e.g., `Program.cs`/`Startup.cs` in ASP.NET, `main.js`/`App.vue` in Vue.js, etc.).
-- Be complete and self-contained, representing the main application/unit for that technology—not just a single endpoint or function.
-- Integrate logically with other stack components (e.g., consistent API URLs, shared models, aligned backend/database code).
-- Be suitable as the main starting point for the respective technology.
+- Each code block should correspond to a distinct, essential file required for that technology’s role in the solution (e.g., application files, dependecy files, configs, modules, etc.).
+- Together, the code blocks for each technology must cover the main logic and structure needed for integration into the overall system.
+- Ensure code blocks are logically consistent and interconnected across technologies where relevant (e.g., shared APIs, data models, configuration).
+- Preserve any necessary project structure and organization within the code itself, but provide only the filename (not a relative or absolute path) in the filename field.
 
-Output a JSON object in the following format:
-{{ "code_blocks": [ {{"technology": "$TECH_STACK_ITEM_1", "code": "$COMPLETE_MAIN_CODE_SNIPPET_1"}}, {{"technology": "$TECH_STACK_ITEM_2", "code": "$COMPLETE_MAIN_CODE_SNIPPET_2"}}, ...] }}
+Output a JSON object in the following format (note the grouping by technology):
+`{{"code_blocks": [ {{"technology": "$TECH_STACK_ITEM_1", "blocks": [{{"filename": "$FILENAME_NOT_A_PATH_1", "code": "$CODE_FOR_FILE_1"}}, {{"filename": "$FILENAME_NOT_A_PATH_2", "code": "$CODE_FOR_FILE_2"}}]}}, {{"technology": "$TECH_STACK_ITEM_2", "blocks": [{{"filename": "$FILENAME_NOT_A_PATH_3", "code": "$CODE_FOR_FILE_3"}}]}}, ... ] }}`
 
-Return only valid one-line JSON, with no explanations or comments. Escape only the characters required by the JSON format (DON'T escape the dollar sign like \$; use $ as is).
-"""
+Return only valid, single-line JSON with no explanations or comments. Escape only characters required by JSON formatting. Do NOT escape the dollar sign; use `$` as is."""
 
     def create(self, llm: SupportedLLMs):
         model = get_llm(llm)

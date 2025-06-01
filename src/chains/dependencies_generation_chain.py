@@ -1,7 +1,7 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
-from llm_provider import SupportedLLMs, get_llm
+from llm_provider import SupportedLLMs, get_llm, get_lowcost_llm
 
 
 class DependenciesGenerationChain:
@@ -19,7 +19,7 @@ For each technology, generate the primary dependency/requirement file (e.g., req
 - Output only one code block per technology, with the complete content of the file, and proper, legitimate filename.
 - Escape only characters required by JSON formatting (e.g. do NOT escape ', $).
 - Return only valid JSON in this format:
-{{"code_blocks": [ {{"technology": "$TECH_STACK_ITEM_1", "filename": "$DEPENDENCY_FILE_NAME_1", "code": "$COMPLETE_DEPS_FILE_CONTENT_1"}}, {{"technology": "$TECH_STACK_ITEM_2", "filename": "$DEPENDENCY_FILE_NAME_2", "content": "$COMPLETE_DEPS_FILE_CONTENT_2"}}, ...] }}
+`{{"code_blocks": [ {{"technology": "$TECH_STACK_ITEM_1", "blocks": [{{"filename": "$DEPENDENCY_FILE_NAME_1", "code": "$COMPLETE_DEPS_FILE_CONTENT_1"}}]}}, {{"technology": "$TECH_STACK_ITEM_2", "blocks": [{{"filename": "$DEPENDENCY_FILE_NAME_2", "code": "$COMPLETE_DEPS_FILE_CONTENT_2"}}]}}, ... ] }}`
 
 All code blocks must be valid for immediate use with appropriate tools (e.g., pip, dotnet, npm, mvn, gem, composer, etc.).
 """
