@@ -11,14 +11,9 @@ class ValidationAgent:
     def invoke(self, state):
         is_valid_str = self.validation_chain.invoke(state)
         is_valid = self._parse_bool(is_valid_str)
-        if not is_valid:
-            return {
-                "is_valid": False
-            }
-        else:
-            return {
-                "is_valid": True,
-            }
+        return {
+            "is_valid": is_valid
+        }
 
     def _parse_bool(self, str_):
         if str_.lower() == "true":

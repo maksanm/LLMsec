@@ -6,7 +6,7 @@
 
 - **Model Coverage:** Supports testing with OpenAI GPT-4.1, DeepSeek V3, Grok-3, TBC.
 - **Security Assessment:** Uses Trivy to scan generated code for vulnerabilities, classifying them by CVSS severity: Unknown, Low, Medium, High, Critical.
-- **Experiment Scope:** Runs on a set of programming problems (e.g., CRUD, web apps, auth flows) described in natural language and implemented in various tech stacks. Analyzes and compares models based on the number and severity of vulnerabilities, and identifies patterns such as supply chain attack risks.
+- **Experiment Scope:** Runs on a set of programming problems (e.g., web apps, auth flows, DevOps pipelines, etc.) described in natural language and implemented in various tech stacks. Analyzes and compares models based on the number and severity of vulnerabilities.
 
 ## Getting Started
 
@@ -25,7 +25,7 @@
 
 3. **Set up environment variables:**
    - Copy `.env.sample` to `.env` and fill in the required values.
-   - Set the `TRIVY_PATH` variable to the full path to your Trivy executable.
+   - Set the `TRIVY_PATH` variable to the full path to your Trivy executable, which can be downloaded [here](https://github.com/aquasecurity/trivy/releases/tag/v0.63.0).
    - Provide required LLM platforms API keys.
 
 ### Running the Server
@@ -40,4 +40,7 @@ The interactive API docs will be available at [http://localhost:8000](http://loc
 
 ### Endpoint Parameters
 
-Use the `generation_mode` parameter in endpoint requests to specify whether the system should analyze the code implementing the desired functionality, or just the dependencies needed for the project.
+- Use the `task_description` parameter to provide a natural language description of the desired software functionality and requirements.
+- Use the `generation_mode` parameter to specify the analysis scope:
+    - `"code"`: The system will analyze the actual code implementing the desired functionality.
+    - `"dependencies"`: The system will analyze only the dependencies required for the project.

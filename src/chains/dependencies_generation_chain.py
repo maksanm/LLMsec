@@ -13,7 +13,6 @@ and the following technology stack:
 
 For each technology, generate the primary dependency/requirement file (e.g., requirements.txt for Python, .csproj for .NET, package.json for Node.js) as a single code block.
 
-**Instructions:**
 - Create the correct dependency file for each technology as used at a project root.
 - List all required packages/dependencies, EACH WITH AN EXPLICIT VERSION, including those needed for integrating the technologies within the tech stack.
 - Output only one code block per technology, with the complete content of the file, and proper, legitimate filename.
