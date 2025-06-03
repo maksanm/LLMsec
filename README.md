@@ -44,3 +44,27 @@ The interactive API docs will be available at [http://localhost:8000](http://loc
 - Use the `generation_mode` parameter to specify the analysis scope:
     - `"code"`: The system will analyze the actual code implementing the desired functionality.
     - `"dependencies"`: The system will analyze only the dependencies required for the project.
+
+## Utilities
+
+Scripts for data generation and analysis are located in the `utils` directory:
+
+### `utils/generate_data.py`
+
+- Sends multiple task prompts to the running API server and saves results as JSON in `generated_data/`.
+- **How to run:**
+  1. Start the API server (`src/server.py`).
+  2. Optionally adjust prompts in the script.
+  3. Run:
+     ```bash
+     poetry run python utils/generate_data.py
+     ```
+
+### `utils/analyze_data.py`
+
+- Analyzes JSON results to generate vulnerability statistics and summary plots in `vulnerability_plots/`.
+- **How to run:**
+  ```bash
+  poetry run python utils/analyze_data.py
+  ```
+- Requires files in `generated_data/` (run `generate_data.py` first).
